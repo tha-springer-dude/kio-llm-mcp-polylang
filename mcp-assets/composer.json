@@ -1,0 +1,5 @@
+{
+    "require": {
+        "wp-media/mcp-oauth": "^1.1"
+    }
+}
