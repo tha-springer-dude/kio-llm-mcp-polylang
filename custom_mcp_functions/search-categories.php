@@ -7,6 +7,9 @@
 
 add_action( 'wp_abilities_api_init', 'my_category_search_register' );
 
+/**
+ * Register the MCP ability and describe its input and output format.
+ */
 function my_category_search_register() {
 
     wp_register_ability(
@@ -75,12 +78,26 @@ function my_category_search_register() {
     );
 }
 
+/**
+ * Allow category searches for users who can read site content.
+ *
+ * @return bool True when the current user has read permission.
+ */
 function my_custom_category_search_permission() {
     return current_user_can( 'read' );
 }
 
+/**
+ * Search categories in Polylang's default language.
+ *
+ * Translations are included only when explicitly requested in the input.
+ *
+ * @param array $input MCP input containing the search term and translation flag.
+ * @return array Search results, or an error when Polylang is unavailable.
+ */
 function my_custom_category_search( $input ) {
 
+    // The language-aware query depends on Polylang's public API.
     if ( ! function_exists( 'pll_default_language' ) ) {
         return array(
             'error' => 'Polylang is not available.',
@@ -99,6 +116,7 @@ function my_custom_category_search( $input ) {
 
     foreach ( $categories as $category ) {
 
+        // Match the requested text anywhere in the category name.
         if ( stripos( $category->name, $input['search'] ) === false ) {
             continue;
         }
@@ -115,6 +133,7 @@ function my_custom_category_search( $input ) {
 
             foreach ( $translations as $language => $term_id ) {
 
+                // The primary category is already represented by the parent result.
                 if ( $language === $default_language ) {
                     continue;
                 }
@@ -129,6 +148,7 @@ function my_custom_category_search( $input ) {
                 }
             }
 
+            // Omit the field when no translated category was found.
             if ( ! empty( $translation_results ) ) {
                 $result['translations'] = $translation_results;
             }
