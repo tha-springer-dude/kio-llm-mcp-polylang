@@ -1,4 +1,7 @@
 <?php
+// Load the shared Polylang helper functions.
+require_once __DIR__ . '/includes/kio-polylang.php';
+
 /**
  * KIO MCP – Search Categories
  *
@@ -220,7 +223,8 @@ function my_custom_category_search( $input ) {
      * function_exists() prevents a fatal PHP error if Polylang is
      * disabled or unavailable.
      */
-    if ( ! function_exists( 'pll_default_language' ) ) {
+    // Stop if Polylang is not available.
+    if ( ! kio_pll_is_available() ) {
         return array(
             'error' => 'Polylang is not available.',
         );
@@ -237,8 +241,10 @@ function my_custom_category_search( $input ) {
      *
      * Polylang tells us what the site's default language actually is.
      */
-    $default_language = pll_default_language( 'slug' );
-
+    //$default_language = pll_default_language( 'slug' );
+    
+    // Get the site's default language from Polylang.
+    $default_language = kio_pll_get_default_language();
      /*
      * STEP 3 — Get categories belonging to the default language.
      *
@@ -325,7 +331,10 @@ function my_custom_category_search( $input ) {
              * We have the default category already, so we use these IDs
              * to find its translated siblings.
              */
-            $translations = pll_get_term_translations( $category->term_id );
+            //$translations = pll_get_term_translations( $category->term_id );
+
+            // Get the translated category IDs from Polylang.
+            $translations = kio_pll_get_term_translations( $category->term_id );
             $translation_results = array();
 
             /*
@@ -381,7 +390,7 @@ function my_custom_category_search( $input ) {
         $results[] = $result;
     }
 
-    /*
+/*
     * STEP 11 — Add the completed category to the final result list.
     */
     return array(
