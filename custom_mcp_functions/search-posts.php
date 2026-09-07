@@ -1,4 +1,6 @@
 <?php
+// Load the shared Polylang helper functions.
+require_once __DIR__ . '/includes/kio-polylang.php';
 
 add_action( 'wp_abilities_api_init', 'my_post_search_register' );
 
