@@ -21,7 +21,14 @@ require_once __DIR__ . '/custom_mcp_functions/posts/find-posts-by-category-name.
 require_once __DIR__ . '/custom_mcp_functions/posts/create-post.php';
 require_once __DIR__ . '/custom_mcp_functions/posts/create-post-translation.php';
 require_once __DIR__ . '/custom_mcp_functions/posts/update-post.php';
+require_once __DIR__ . '/custom_mcp_functions/posts/delete-post.php';
 
 require_once __DIR__ . '/custom_mcp_functions/media/list-media-library.php';
 require_once __DIR__ . '/custom_mcp_functions/media/find-media-by-id.php';
 require_once __DIR__ . '/custom_mcp_functions/media/find-media-by-name.php';
+require_once __DIR__ . '/custom_mcp_functions/media/set-post-featured-image.php';
+
+require_once __DIR__ . '/custom_mcp_functions/tags/list-tags.php';
+require_once __DIR__ . '/custom_mcp_functions/tags/find-tag-by-id.php';
+require_once __DIR__ . '/custom_mcp_functions/tags/find-tag-by-name.php';
+require_once __DIR__ . '/custom_mcp_functions/tags/set-post-tags.php';
